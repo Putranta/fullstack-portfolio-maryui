@@ -2,11 +2,12 @@
 
 use Livewire\Volt\Component;
 use Livewire\Attributes\Layout;
+use Illuminate\Support\Facades\Http;
 
 new
 #[Layout('components.layouts.public')]
 class extends Component {
-    //
+
 }; ?>
 
 <div>
@@ -103,7 +104,7 @@ class extends Component {
         </div>
 
         @for ($i = 0; $i < 3; $i++)
-            <div class="group mb-3 sm:mb-8 last:mb-12">
+            <div class="group mb-3 sm:mb-8">
                 <a href="detail.html">
                     <section
                         class="bg-white max-w-[42rem] border-base-200 border-2 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[20rem] hover:bg-gray-200 transition sm:group-even:pl-8 dark:bg-base-100 dark:hover:bg-white/10">
@@ -142,7 +143,7 @@ class extends Component {
             </div>
         @endfor
 
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-10">
             <a href="/project" wire:navigate class="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-3 md:py-4 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-300 ease-out md:font-semibold">
                 <span>View More</span>
                 <x-icon name="o-arrow-right" />
@@ -156,51 +157,7 @@ class extends Component {
             <x-header title="📖 Posts" separator class="mb-4" />
         </div>
 
-        <div class="grid grid-cols-1  gap-8 max-w-[42rem]">
-            @for ($i = 0; $i < 5; $i++)
-            <div class="border transition-all duration-500 rounded-lg relative group grid grid-cols-1 md:grid-cols-2 object-cover">
-                <div class="cursor-pointer overflow-hidden rounded-t-lg md:rounded-r-none md:rounded-l-lg">
-                  <Image
-                    src="{{ asset('storage/project/ds2.jpg') }}"
-                    alt=""
-                    class="group-hover:scale-110 transition-all duration-500 h-full object-cover"
-                  />
-                </div>
-
-                <div class="m-3 sm:p-3 flex flex-col">
-                  <div class="flex justify-between items-center text-sm">
-                    <p>2 Days ago</p>
-
-                    <div class="flex items-center gap-3">
-                      <p class="flex items-center gap-1">
-                        <x-icon name="s-heart" class="text-gray-400" />
-                        <span>2</span>
-                      </p>
-
-                      <p class="flex items-center gap-1">
-                        <x-icon name="s-chat-bubble-left" class="text-gray-400" />
-                        <span>3</span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <a href={blog.url}>
-                    <p class="my-2 lg:my-3 cursor-pointer  sm:text-lg font-medium">
-                      Post Title
-                    </p>
-                  </a>
-
-                  <p class="text-sm pb-6 line-clamp-3">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti nobis voluptatibus, dolor nemo nostrum sunt quas ipsum perferendis, velit sapiente minima non tempore beatae. Minima rem perferendis animi repellat deserunt.
-                  </p>
-
-                  <div class="py-2">
-                    <p class="mb-2 text-sm absolute right-5 bottom-2 text-right text-gray-600">5 Min Read</p>
-                  </div>
-                </div>
-            </div>
-            @endfor
-        </div>
+        <livewire:components.posts lazy />
 
     </section>
 </div>
