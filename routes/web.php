@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Volt::route('/admin', 'users.index');
+Volt::route('/', 'public.home')->name('home');
+Volt::route('/project', 'public.project')->name('project');
+Volt::route('/post', 'public.post')->name('post');
+Volt::route('/guest', 'public.guest')->name('guest');
