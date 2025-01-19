@@ -23,4 +23,8 @@ export default {
         require("tailwindcss-motion"),
     ],
     darkMode: "class",
+
+    daisyui: {
+        themes: ["light", "dark", "wireframe"],
+    },
 };
