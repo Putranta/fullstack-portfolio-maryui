@@ -8,6 +8,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>document.documentElement.classList.add('js')</script>
+
 </head>
 <body class="min-h-screen font-sans antialiased text-base-content relative ">
     {{-- <div class="bg-[#fbe2e3] absolute top-[-6rem] flex-1 -z-[10] right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem] sm:w-[68.75rem] dark:bg-[#946263]"></div>
@@ -15,7 +16,7 @@
 
     <x-navbar/>
 
-    <div class="fixed top-3 right-1 md:hidden z-50">
+    <div class="fixed top-3 right-3 md:hidden z-50">
         <x-theme-toggle class="btn btn-sm md:btn-md btn-circle" />
     </div>
 
@@ -31,22 +32,25 @@
     <x-toast />
 
     <script>
-         let lastScrollY = window.scrollY;
-      const threshold = 70; // Jarak scroll tertentu sebelum navbar hilang
+        let lastScrollY = window.scrollY;
+        const threshold = 70; // Jarak scroll tertentu sebelum navbar hilang
 
-      window.addEventListener("scroll", () => {
-        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            const navbar = document.getElementById("navbar");
+            const navbarMobile = document.getElementById("navbar-mobile");
 
-        if (window.scrollY > threshold && window.scrollY > lastScrollY) {
-          // Jika scroll lebih dari threshold dan scroll ke bawah
-          navbar.style.opacity = "0";
-        } else if (window.scrollY < lastScrollY) {
-          // Jika scroll ke atas
-          navbar.style.opacity = "1";
-        }
+            if (window.scrollY > threshold && window.scrollY > lastScrollY) {
+            // Jika scroll lebih dari threshold dan scroll ke bawah
+            navbar.style.opacity = "0";
+            navbarMobile.style.opacity = "0";
+            } else if (window.scrollY < lastScrollY) {
+            // Jika scroll ke atas
+            navbar.style.opacity = "1";
+            navbarMobile.style.opacity = "1";
+            }
 
-        lastScrollY = window.scrollY;
-      });
+            lastScrollY = window.scrollY;
+        });
     </script>
 </body>
 </html>

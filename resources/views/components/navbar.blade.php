@@ -16,7 +16,7 @@
     </nav>
 </div>
 
-<div id="navbar" class="fixed block md:hidden bottom-2 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-700">
+<div id="navbar-mobile" class="fixed block md:hidden bottom-2 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-700">
     <nav
         class="flex w-full items-center space-x-6 bg-white/30 backdrop-blur-md px-4 sm:px-8 py-2 rounded-full text-base sm:text-lg shadow-md border border-white/20">
         <x-nav-item url="{{ route('home') }}" active="{{ request()->routeIs('home') }}">

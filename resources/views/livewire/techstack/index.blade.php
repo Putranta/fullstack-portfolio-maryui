@@ -92,6 +92,8 @@ new class extends Component {
         $this->success('Tech Stack Updated');
         $this->resetField();
     }
+
+
 }; ?>
 
 <div>
@@ -119,7 +121,7 @@ new class extends Component {
 
             @scope('cell_text_color', $tech)
                 <div class="flex gap-2 items-center">
-                    <div class="w-6 h-6 rounded-md shadow-md" style="color: {{ $tech->text_color }}"></div>
+                    <div class="w-6 h-6 rounded-md shadow-md" style="background-color:{{ $tech->text_color }}"></div>
                     <span>{{ $tech->text_color }}</span>
                 </div>
             @endscope
