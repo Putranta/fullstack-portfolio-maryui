@@ -148,7 +148,8 @@ class extends Component {
     </section>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+@push('b-script')
+{{-- <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
 <script>
     const {
         animate,
@@ -191,4 +192,7 @@ class extends Component {
         attributes: true,
         attributeFilter: ["data-theme"],
     });
-</script>
+</script> --}}
+@endpush
+
+

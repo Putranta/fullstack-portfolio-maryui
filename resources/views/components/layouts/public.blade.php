@@ -52,5 +52,7 @@
             lastScrollY = window.scrollY;
         });
     </script>
+
+    @stack('b-script')
 </body>
 </html>
