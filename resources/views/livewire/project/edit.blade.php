@@ -72,12 +72,30 @@ new class extends Component {
         $this->project->update($data);
         // Sync selection
         $this->project->techStack()->sync($this->tech);
-        $this->syncMedia($this->project);
+        $this->syncMedia(
+            model: $this->project,         // A model that has an image library
+            library: 'library',         // The library metadata property on component
+            files: 'files',             // Temp files property on component
+            storage_subpath: '/project',        // Sub path on storage. Ex: '/users'
+            model_field: 'library',     // The model column that represents the library metadata
+            visibility: 'public',      // Visibility on storage
+            disk: 'public',              // Storage disk. Also works with 's3'
+        );
 
         $this->success('Project Updated', redirectTo: '/aswin/project');
     }
 
 }; ?>
+
+@push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+    {{-- Sortable.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.1/Sortable.min.js"></script>
+
+    {{-- TinyMCE --}}
+    <script src="https://cdn.tiny.cloud/1/ltx2i0i5ckkd0qz95tu9sep4j77rh4z81zizib19cnst238a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+@endpush
 
 <div class="mb-20">
     <x-header title="Update Project" separator progress-indicator />

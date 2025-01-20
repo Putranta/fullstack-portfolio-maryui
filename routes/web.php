@@ -11,5 +11,6 @@ Volt::route('/aswin/project/{id}/edit', 'project.edit');
 
 Volt::route('/', 'public.home')->name('home');
 Volt::route('/project', 'public.project')->name('project');
+Volt::route('/project/{slug}', 'public.project-detail')->name('project-detail');
 Volt::route('/post', 'public.post')->name('post');
 Volt::route('/guest', 'public.guest')->name('guest');

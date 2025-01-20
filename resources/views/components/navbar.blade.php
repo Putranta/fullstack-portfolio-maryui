@@ -4,7 +4,7 @@
         <x-nav-item url="{{ route('home') }}" active="{{ request()->routeIs('home') }}">
             <x-icon name="o-home" /> Home
         </x-nav-item>
-        <x-nav-item url="{{ route('project') }}" active="{{ request()->routeIs('project') }}">
+        <x-nav-item url="{{ route('project') }}" active="{{ request()->routeIs('project') OR request()->routeIs('project-detail') }}">
             <x-icon name="o-code-bracket" /> Projects
         </x-nav-item>
         <x-nav-item url="{{ route('post') }}" active="{{ request()->routeIs('post') }}">
@@ -22,7 +22,7 @@
         <x-nav-item url="{{ route('home') }}" active="{{ request()->routeIs('home') }}">
             <x-icon name="o-home" />
         </x-nav-item>
-        <x-nav-item url="{{ route('project') }}" active="{{ request()->routeIs('project') }}">
+        <x-nav-item url="{{ route('project') }}" active="{{ request()->routeIs('project') OR request()->routeIs('project-detail') }}">
             <x-icon name="o-code-bracket" />
         </x-nav-item>
         <x-nav-item url="{{ route('post') }}" active="{{ request()->routeIs('post') }}">

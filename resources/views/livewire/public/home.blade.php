@@ -104,7 +104,7 @@ class extends Component {
                 @php
                     $image = json_decode($project->library, true)[0]
                 @endphp
-                <a href="/project/{{$project->slug}}">
+                <a href="/project/{{$project->slug}}" wire:navigate>
                     <section
                         class="bg-white md:w-[42rem] border-base-200 border-2 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[20rem] hover:bg-gray-200 transition sm:group-even:pl-8 dark:bg-base-100 dark:hover:bg-white/10">
                         <div
@@ -115,7 +115,7 @@ class extends Component {
                             </p>
                             <div class="flex flex-wrap gap-2 justify-items-start items-start justify-start">
                                 @foreach ($project->techStack as $tech)
-                                    <div class="flex gap-2 py-1 px-2 rounded-md items-center cursor-default"  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
+                                    <div class="flex gap-2 px-2 rounded-md items-center cursor-default"  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
                                         <span style="color: {{ $tech->text_color }}">{{ $tech->name }}</span>
                                     </div>
                                 @endforeach
