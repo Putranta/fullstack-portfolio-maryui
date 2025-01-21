@@ -25,12 +25,13 @@ class NoSQLInjection implements ValidationRule
             '/;/',                  // Query separator
             '/\bOR\b\s+\d+=\d+/i',  // OR 1=1
             '/\bAND\b\s+\d+=\d+/i', // AND 1=1
+            '/<\?/',
         ];
 
         // Periksa apakah ada pola yang cocok
         foreach ($patterns as $pattern) {
             if (preg_match($pattern, $value)) {
-                $fail("The :attribute contains forbidden SQL keywords or patterns.");
+                $fail("The :attribute contains forbidden SQL keywords, patterns, or PHP tags.");
                 return;
             }
         }

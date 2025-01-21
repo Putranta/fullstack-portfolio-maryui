@@ -12,6 +12,8 @@ Volt::route('/aswin/tech', 'techstack.index');
 Volt::route('/aswin/project', 'project.index');
 Volt::route('/aswin/project/create', 'project.create');
 Volt::route('/aswin/project/{id}/edit', 'project.edit');
+Volt::route('/aswin/comment', 'comment.index');
+Volt::route('/aswin/gallery', 'gallery.index');
 
 Volt::route('/', 'public.home')->name('home');
 Volt::route('/project', 'public.project')->name('project');

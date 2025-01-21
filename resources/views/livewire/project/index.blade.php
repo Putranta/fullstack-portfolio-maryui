@@ -15,7 +15,7 @@ new class extends Component {
         return [
             ['key' => 'image', 'label' => 'Img'],
             ['key' => 'title', 'label' => 'Title'],
-            ['key' => 'tech', 'label' => 'Tech Stack'],
+            ['key' => 'tech', 'label' => 'Tech Stack', 'class' => 'hidden lg:table-cell'],
             ['key' => 'action', 'label' => 'Action']
         ];
     }

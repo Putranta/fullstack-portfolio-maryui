@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function likedGallery()
+    {
+        return $this->belongsToMany(Gallery::class, 'gallery_like');
+    }
+
+    public function commentGallery()
+    {
+        return $this->belongsToMany(Gallery::class, 'gallery_comment');
+    }
 }

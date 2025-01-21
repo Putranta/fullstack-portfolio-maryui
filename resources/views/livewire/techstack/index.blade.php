@@ -30,9 +30,9 @@ new class extends Component {
     {
         return [
             ['key' => 'svg', 'label' => '#Badge'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'bg_color', 'label' => 'Bg Color'],
-            ['key' => 'text_color', 'label' => 'Text Color'],
+            ['key' => 'name', 'label' => 'Name', 'class' => 'hidden lg:table-cell'],
+            ['key' => 'bg_color', 'label' => 'Bg Color', 'class' => 'hidden lg:table-cell'],
+            ['key' => 'text_color', 'label' => 'Text Color', 'class' => 'hidden lg:table-cell'],
             ['key' => 'action', 'label' => 'Action', 'class' => 'text-center']
         ];
     }
@@ -69,7 +69,7 @@ new class extends Component {
     public function delete(TechStack $tech): void
     {
         $tech->delete();
-        $this->warning("$tech->name deleted", position: 'toast-bottom');
+        $this->warning("Tech Stack deleted", position: 'toast-bottom');
     }
 
     public function edit($tech): void
@@ -103,39 +103,36 @@ new class extends Component {
         </x-slot:actions>
     </x-header>
 
-    <x-card>
-        <x-table :headers="$headers" :rows="$techs"  class="text-base">
-            @scope('cell_svg', $tech)
-                <div class="flex gap-2 py-1 px-4 rounded-md items-center"  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
-                    {!! $tech->svg !!}
-                    <span style="color: {{ $tech->text_color }}">{{ $tech->name }}</span>
-                </div>
-            @endscope
+    <x-table :headers="$headers" :rows="$techs"  class="text-base">
+        @scope('cell_svg', $tech)
+            <div class="flex gap-2 py-1 px-4 rounded-md items-center"  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
+                {!! $tech->svg !!}
+                <span style="color: {{ $tech->text_color }}">{{ $tech->name }}</span>
+            </div>
+        @endscope
 
-            @scope('cell_bg_color', $tech)
-                <div class="flex gap-2 items-center">
-                    <div class="w-6 h-6 rounded-md shadow-md" style="background-color: {{ $tech->bg_color }}; "></div>
-                    <span>{{ $tech->bg_color }}</span>
-                </div>
-            @endscope
+        @scope('cell_bg_color', $tech)
+            <div class="flex gap-2 items-center">
+                <div class="w-6 h-6 rounded-md shadow-md" style="background-color: {{ $tech->bg_color }}; "></div>
+                <span>{{ $tech->bg_color }}</span>
+            </div>
+        @endscope
 
-            @scope('cell_text_color', $tech)
-                <div class="flex gap-2 items-center">
-                    <div class="w-6 h-6 rounded-md shadow-md" style="background-color:{{ $tech->text_color }}"></div>
-                    <span>{{ $tech->text_color }}</span>
-                </div>
-            @endscope
+        @scope('cell_text_color', $tech)
+            <div class="flex gap-2 items-center">
+                <div class="w-6 h-6 rounded-md shadow-md" style="background-color:{{ $tech->text_color }}"></div>
+                <span>{{ $tech->text_color }}</span>
+            </div>
+        @endscope
 
-            @scope('cell_action', $tech)
-                <x-button icon="o-pencil" wire:click="edit({{ $tech->id }})"
-                    class="btn-ghost btn-sm text-black" spinner="edit({{ $tech['id'] }})" />
+        @scope('cell_action', $tech)
+            <x-button icon="o-pencil" wire:click="edit({{ $tech->id }})"
+                class="btn-ghost btn-sm text-black" spinner="edit({{ $tech['id'] }})" />
 
-                <x-button icon="o-trash" wire:click="delete({{ $tech->id }})" wire:confirm="Are you sure?" spinner
-                    class="btn-ghost btn-sm text-red-500" />
-            @endscope
-        </x-table>
-    </x-card>
-
+            <x-button icon="o-trash" wire:click="delete({{ $tech->id }})" wire:confirm="Are you sure?" spinner
+                class="btn-ghost btn-sm text-red-500" />
+        @endscope
+    </x-table>
 
     <x-modal wire:model="createModal" title="Create Tech Stack" separator>
         <x-form wire:submit="save">
@@ -147,7 +144,7 @@ new class extends Component {
                 rows="4"
                 inline />
 
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
                 <x-colorpicker wire:model="bg_color" label="Bg-color" inline />
                 <x-colorpicker wire:model="text_color" label="Text-color" inline />
             </div>
@@ -169,7 +166,7 @@ new class extends Component {
                 rows="4"
                 inline />
 
-            <div class="flex gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
                 <x-colorpicker wire:model="bg_color" label="Bg-color" inline />
                 <x-colorpicker wire:model="text_color" label="Text-color" inline />
             </div>
