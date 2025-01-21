@@ -10,6 +10,9 @@
         <x-navitem url="{{ route('post') }}" active="{{ request()->routeIs('post') }}">
             <x-icon name="o-book-open" /> Posts
         </x-navitem>
+        <x-navitem url="{{ route('gallery') }}" active="{{ request()->routeIs('gallery') }}">
+            <x-icon name="o-photo" /> Gallery
+        </x-navitem>
         <x-navitem url="{{ route('guest') }}" active="{{ request()->routeIs('guest') }}">
             <x-icon name="o-chat-bubble-bottom-center-text" /> Guest
         </x-navitem>
@@ -27,6 +30,9 @@
         </x-navitem>
         <x-navitem url="{{ route('post') }}" active="{{ request()->routeIs('post') }}">
             <x-icon name="o-book-open" />
+        </x-navitem>
+        <x-navitem url="{{ route('gallery') }}" active="{{ request()->routeIs('gallery') }}">
+            <x-icon name="o-photo" />
         </x-navitem>
         <x-navitem url="{{ route('guest') }}" active="{{ request()->routeIs('guest') }}">
             <x-icon name="o-chat-bubble-bottom-center-text" />

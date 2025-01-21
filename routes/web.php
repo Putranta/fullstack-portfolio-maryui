@@ -17,6 +17,7 @@ Volt::route('/', 'public.home')->name('home');
 Volt::route('/project', 'public.project')->name('project');
 Volt::route('/project/{slug}', 'public.project-detail')->name('project-detail');
 Volt::route('/post', 'public.post')->name('post');
+Volt::route('/gallery', 'public.gallery')->name('gallery');
 Volt::route('/guest', 'public.guest')->name('guest');
 
 

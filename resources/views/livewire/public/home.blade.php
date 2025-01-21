@@ -47,7 +47,7 @@ class extends Component {
 
             <div class="flex skill flex-wrap gap-2 justify-items-start items-start justify-start">
                 @foreach ($techs as $tech)
-                    <div class="flex gap-2 py-1 px-4 rounded-sm items-center cursor-default hover:motion-preset-seesaw click:motion-preset-seesaw "  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
+                    <div class="flex gap-2 py-1 px-2 md:px-4 rounded-sm items-center cursor-default hover:motion-preset-seesaw click:motion-preset-seesaw "  style="background-color: {{ $tech->bg_color }}; width: fit-content;">
                         {!! $tech->svg !!}
                         <span style="color: {{ $tech->text_color }}">{{ $tech->name }}</span>
                     </div>
@@ -109,10 +109,10 @@ class extends Component {
                 @endphp
                 <a href="/project/{{$project->slug}}" wire:navigate>
                     <section
-                        class="bg-white md:w-[42rem] border-base-200 border-2 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[20rem] hover:bg-gray-200 transition sm:group-even:pl-8 dark:bg-base-100 dark:hover:bg-white/10">
+                        class="bg-white md:w-[42rem] border-base-200 border-2 rounded-lg overflow-hidden sm:pr-8 relative hover:bg-gray-200 transition sm:group-even:pl-8 dark:bg-base-100 dark:hover:bg-white/10 shadow-md md:pb-6 pb-3">
                         <div
-                            class="pt-4 pb-7 px-5 sm:pl-10 sm:pr-2 sm:pt-8 sm:max-w-[60%] flex flex-col h-full sm:group-even:ml-[15rem]">
-                            <h3 class="text-2xl font-semibold">{{ $project->title }}</h3>
+                            class="py-4 px-5 sm:pl-10 sm:pr-2 sm:pt-8 sm:max-w-[60%] flex flex-col h-full sm:group-even:ml-[15rem]">
+                            <h3 class="text-xl font-semibold">{{ $project->title }}</h3>
                             <p class="my-3 line-clamp-3">
                                 {{ strip_tags($project->desc) }}
                             </p>
