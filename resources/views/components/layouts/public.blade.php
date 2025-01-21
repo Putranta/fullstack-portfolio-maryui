@@ -53,6 +53,9 @@
         });
     </script>
 
+    {{--  TOAST area --}}
+    <x-toast />
+
     @stack('b-script')
 </body>
 </html>

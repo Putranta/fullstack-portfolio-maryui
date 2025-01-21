@@ -2,9 +2,7 @@
     @if (empty($posts))
     <div class="grid grid-cols-1 w-full  gap-8 md:gap-12 max-w-[42rem] mb-16">
         {{-- Placeholder --}}
-        @for ($i = 0; $i < count($posts); $i++)
-            {!! $this->placeholder() !!}
-        @endfor
+        {!! $this->placeholder() !!}
     </div>
 
     @else

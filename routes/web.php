@@ -1,6 +1,10 @@
 <?php
 
 use Livewire\Volt\Volt;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Volt::route('/aswin/dashboard', 'dashboard.index');
 Volt::route('/aswin/user', 'users.index');
@@ -14,3 +18,34 @@ Volt::route('/project', 'public.project')->name('project');
 Volt::route('/project/{slug}', 'public.project-detail')->name('project-detail');
 Volt::route('/post', 'public.post')->name('post');
 Volt::route('/guest', 'public.guest')->name('guest');
+
+
+Route::get('/auth/{provider}/redirect', function ($provider) {
+    return Socialite::driver($provider)->redirect();
+})->name('oauth.redirect');
+
+Route::get('/auth/{provider}/callback', function ($provider) {
+    $socialUser = Socialite::driver($provider)->stateless()->user();
+
+    // Cek apakah pengguna sudah terdaftar
+    $user = User::where('email', $socialUser->getEmail())->first();
+
+    if (!$user) {
+        // Buat pengguna baru
+        $user = User::create([
+            'name' => $socialUser->getName(),
+            'email' => $socialUser->getEmail(),
+            'password' => bcrypt(uniqid()), // Set password acak
+        ]);
+    }
+
+    // Login pengguna
+    Auth::login($user);
+
+    return redirect('/guest'); // Redirect ke halaman dashboard atau halaman lain
+})->name('oauth.callback');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // Redirect ke halaman utama atau login
+})->name('logout');
