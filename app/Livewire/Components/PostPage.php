@@ -30,7 +30,7 @@ class PostPage extends Component
     public function placeholder()
     {
         return <<<'HTML'
-            <div class="grid max-w-[42rem] w-full grid-cols-1 md:grid-cols-2 gap-8 :md:py-12">
+            <div class="grid max-w-[42rem] w-full grid-cols-1 md:grid-cols-2 gap-8 :md:py-12 px-2">
                 <div class="skeleton h-60"></div>
                 <div class="flex flex-col gap-6">
                     <div class="skeleton h-6 w-28"></div>

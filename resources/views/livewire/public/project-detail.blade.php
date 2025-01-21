@@ -38,10 +38,13 @@ class extends Component {
 @section('title', $project->slug)
 
 <div class="grid grid-cols-1 justify-center justify-items-center mb-16">
+    <div class="fixed top-3 right-3 md:hidden z-50">
+        <x-theme-toggle class="btn btn-sm md:btn-md btn-circle" />
+    </div>
     <x-image-gallery :images="$urls" class="h-40 rounded-md md:mx-40" />
 
     <div class="max-w-[42rem] mt-6 md:mt-10">
-        <x-header title="{{ $project->title }}" class="mb-0 text-2xl md:text-3xl" size="" />
+        <x-header title="{{ $project->title }}" class="!mb-0 gap-1 text-2xl md:text-3xl" size="" />
 
         <div class="flex flex-wrap gap-2 justify-items-start items-start justify-start">
             @foreach ($project->techStack as $tech)
@@ -52,7 +55,7 @@ class extends Component {
             @endforeach
         </div>
 
-        <div class="my-4 md:my-8 flex gap-4">
+        <div class="my-6 md:my-8 flex gap-4">
             @if ($project->demo_url)
                 <a href="{{ $project->demo_url }}" target="_blank" class="flex items-center gap-1 hover:gap-3 rounded-md bg-gradient-to-r from-pink-500 to-violet-600 px-3 md:px-8 py-2  text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-300 ease-out md:font-semibold" style="width: fit-content;">
                     <span>Demo</span>

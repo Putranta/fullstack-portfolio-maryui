@@ -16,10 +16,6 @@
 
     <x-navbar/>
 
-    <div class="fixed top-3 right-3 md:hidden z-50">
-        <x-theme-toggle class="btn btn-sm md:btn-md btn-circle" />
-    </div>
-
     <div class="fixed hidden md:block bottom-5 right-5 z-50">
         <x-theme-toggle class="btn btn-sm md:btn-md btn-circle" />
     </div>

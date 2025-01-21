@@ -1,4 +1,4 @@
-<div>
+<div class="px-2">
     @if (empty($posts))
     <div class="grid grid-cols-1 w-full  gap-8 md:gap-12 max-w-[42rem] mb-16">
         {{-- Placeholder --}}

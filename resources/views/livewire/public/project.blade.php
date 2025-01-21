@@ -17,7 +17,11 @@ class extends Component {
 
 <div class="w-screen grid grid-cols-1 justify-center justify-items-center mt-0 md:mt-10">
     <div class="max-w-[42rem] w-full px-2">
-        <x-header title="⚡ Projects" size="text-xl md:text-4xl" class="mb-2" />
+        <x-header title="⚡ Projects" size="text-xl md:text-4xl" class="mb-2" >
+            <x-slot:actions>
+                <x-theme-toggle class="btn btn-sm md:hidden btn-circle" />
+            </x-slot:actions>
+        </x-header>
         <hr>
     </div>
 
