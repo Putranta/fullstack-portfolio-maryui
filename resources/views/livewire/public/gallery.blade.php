@@ -78,6 +78,7 @@ class extends Component {
     }
 }; ?>
 
+@section('title', 'Putrantaswin | Gallery')
 <div class="mb-12">
     <div class="min-h-screen">
         <div class="max-w-5xl mx-auto">

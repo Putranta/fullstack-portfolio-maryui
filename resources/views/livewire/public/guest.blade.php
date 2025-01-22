@@ -50,6 +50,7 @@ class extends Component {
     }
 }; ?>
 
+@section('title', 'Putrantaswin | Guest')
 <div>
     <section class="w-screen scroll-mt-28 mb-28 grid grid-cols-1 justify-center justify-items-center mt-0 md:mt-10">
         <div class="max-w-[42rem] w-full px-2">

@@ -53,10 +53,10 @@
                 <x-menu-item title="Gallery" icon="o-photo" link="/aswin/gallery" />
                 <x-menu-item title="User" icon="o-users" link="/aswin/user" />
                 <x-menu-item title="Comment" icon="o-chat-bubble-bottom-center-text" link="/aswin/comment" />
-                {{-- <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
+                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
+                    <x-menu-item title="Profile" icon="o-face-smile" link="/aswin/profile" />
                     <x-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-menu-sub> --}}
+                </x-menu-sub>
             </x-menu>
         </x-slot:sidebar>
 

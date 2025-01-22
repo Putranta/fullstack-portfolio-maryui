@@ -15,6 +15,8 @@ class extends Component {
     }
 }; ?>
 
+@section('title', 'Putrantaswin | Project')
+
 <div class="w-screen grid grid-cols-1 justify-center justify-items-center mt-0 md:mt-10">
     <div class="max-w-[42rem] w-full px-2">
         <x-header title="⚡ Projects" size="text-xl md:text-4xl" class="mb-2" >
