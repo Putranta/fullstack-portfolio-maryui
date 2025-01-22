@@ -16,6 +16,8 @@
 
     <x-navbar/>
 
+    <livewire:components.visitor-count />
+
     <div class="fixed hidden md:block bottom-5 right-5 z-50">
         <x-theme-toggle class="btn btn-sm md:btn-md btn-circle" />
     </div>
