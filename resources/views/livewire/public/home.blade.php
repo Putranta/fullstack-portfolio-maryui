@@ -56,7 +56,7 @@ class extends Component {
         </div>
     </section>
 
-    <section id="app" class="grid grid-cols-1 justify-center justify-items-center mt-14 ">
+    {{-- <section id="app" class="grid grid-cols-1 justify-center justify-items-center mt-14 ">
         <div class="max-w-[42rem] w-full card-container">
             <x-header title="🚀 App Shortcut" separator class="mb-4" size="text-2xl md:text-4xl" />
 
@@ -68,33 +68,9 @@ class extends Component {
                         <span class="text-center text-sm">CyberSense UMKM</span>
                     </div>
                 </a>
-
-                <a href="https://cybersense.putrantaswin.my.id/" target="_blank">
-                    <div
-                        class="app p-3 rounded-lg shadow-md flex flex-col items-center justify-items-center justify-center transition-all duration-500 hover:scale-110">
-                        <img src="{{ asset('storage/app-icon/app2.png') }}" alt="">
-                        <span class="text-center text-sm">CyberSense UMKM</span>
-                    </div>
-                </a>
-
-                <a href="https://cybersense.putrantaswin.my.id/" target="_blank">
-                    <div
-                        class="app p-3 rounded-lg shadow-md flex flex-col items-center justify-items-center justify-center transition-all duration-500 hover:scale-110">
-                        <img src="{{ asset('storage/app-icon/app3.png') }}" alt="">
-                        <span class="text-center text-sm">CyberSense UMKM</span>
-                    </div>
-                </a>
-
-                <a href="https://cybersense.putrantaswin.my.id/" target="_blank">
-                    <div
-                        class="app p-3 rounded-lg shadow-md flex flex-col items-center justify-items-center justify-center transition-all duration-500 hover:scale-110">
-                        <img src="{{ asset('storage/app-icon/app1.png') }}" alt="">
-                        <span class="text-center text-sm">CyberSense UMKM</span>
-                    </div>
-                </a>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <section class="scroll-mt-28 mb-28 card-container grid grid-cols-1 justify-center justify-items-center mt-20">
@@ -112,7 +88,14 @@ class extends Component {
                         class="bg-white md:w-[42rem] border-base-200 border-2 rounded-lg overflow-hidden sm:pr-8 relative hover:bg-gray-200 transition sm:group-even:pl-8 dark:bg-base-100 dark:hover:bg-white/10 shadow-md md:pb-6 pb-3">
                         <div
                             class="py-4 px-5 sm:pl-10 sm:pr-2 sm:pt-8 sm:max-w-[60%] flex flex-col h-full sm:group-even:ml-[15rem]">
-                            <h3 class="text-xl font-semibold">{{ $project->title }}</h3>
+                            <h3 class="text-xl font-semibold">{{ $project->title }}
+                                @if ($project->demo_url)
+                                    <x-badge value="With Demo" class="bg-secondary bg-opacity-50" />
+                                @endif
+                                @if ($project->github_url)
+                                    <x-badge value="With SC" class="bg-primary bg-opacity-50" />
+                                @endif
+                            </h3>
                             <p class="my-3 line-clamp-3">
                                 {{ strip_tags($project->desc) }}
                             </p>

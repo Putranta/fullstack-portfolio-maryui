@@ -59,6 +59,21 @@ new class extends Component {
         $this->success('New Gallery Created');
     }
 
+    public function delete(Gallery $gallery): void
+    {
+        $path = str_replace('/storage', '', $gallery->img);
+        $thumbnail = str_replace('/storage', '', $gallery->thumbnail);
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            Storage::disk('public')->delete($thumbnail);
+            $gallery->delete();
+            $this->success('Gallery Deleted');
+        } else {
+            $this->warning('Image Not Found');
+        }
+    }
+
 
     public function edit(Gallery $gallery): void
     {
