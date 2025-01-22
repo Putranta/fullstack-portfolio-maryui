@@ -23,7 +23,10 @@ Volt::route('/gallery', 'public.gallery')->name('gallery');
 Volt::route('/guest', 'public.guest')->name('guest');
 
 
+
 Route::get('/auth/{provider}/redirect', function ($provider) {
+    // Simpan URL halaman sebelumnya ke session
+    session(['redirect_url' => url()->previous()]);
     return Socialite::driver($provider)->redirect();
 })->name('oauth.redirect');
 
@@ -45,7 +48,7 @@ Route::get('/auth/{provider}/callback', function ($provider) {
     // Login pengguna
     Auth::login($user);
 
-    return redirect('/guest'); // Redirect ke halaman dashboard atau halaman lain
+    return redirect(session('redirect_url', '/'));
 })->name('oauth.callback');
 
 Route::post('/logout', function () {

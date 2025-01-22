@@ -53,7 +53,8 @@ new class extends Component {
         Gallery::create($data);
 
         // Reset form dan beri notifikasi sukses
-        $this->reset(['img', 'title']);
+        $this->title = '';
+        $this->img = '';
         $this->createModal = false;
         $this->success('New Gallery Created');
     }
@@ -67,6 +68,21 @@ new class extends Component {
         $this->img = $gallery->thumbnail;
     }
 
+    public function update(): void
+    {
+        $data = $this->validate(['title' => 'required']);
+        $data['slug'] = Str::slug($data['title']);
+
+        $galleryData = Gallery::find($this->updateId);
+        $galleryData->update($data);
+
+        $this->updateModal = false;
+        $this->success('Gallery Updated');
+        $this->title = '';
+        $this->img = '';
+        $this->updateId = null;
+    }
+
     public function headers(): array
     {
         return [
@@ -75,7 +91,7 @@ new class extends Component {
             ['key' => 'like', 'label' => 'Lk'],
             ['key' => 'comment', 'label' => 'Cm'],
             ['key' => 'download', 'label' => 'Dl'],
-            ['key' => 'action', 'label' => 'Action']
+            ['key' => 'action', 'label' => 'Action', 'class' => 'text-center']
         ];
     }
 
@@ -113,7 +129,7 @@ new class extends Component {
         <x-form wire:submit="save">
             <x-input wire:model="title" label="Title" />
             <x-file wire:model="img" accept="image/png, image/jpeg, image/jpg">
-                <img src="{{ $gallery->img ?? '/blank.jpg' }}" class="h-52 rounded-lg" />
+                <img src="/blank.jpg" class="h-52 rounded-lg" />
             </x-file>
 
             <x-slot:actions>
