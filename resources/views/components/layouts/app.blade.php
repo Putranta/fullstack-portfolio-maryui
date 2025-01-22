@@ -47,7 +47,7 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Hello" icon="o-sparkles" link="/aswin/dashboard" />
+                <x-menu-item title="Dashboard" icon="o-fire" link="/aswin/dashboard" />
                 <x-menu-item title="Tech Stack" icon="o-sparkles" link="/aswin/tech" />
                 <x-menu-item title="Project" icon="o-rocket-launch" link="/aswin/project" />
                 <x-menu-item title="Gallery" icon="o-photo" link="/aswin/gallery" />
