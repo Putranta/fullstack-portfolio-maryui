@@ -49,7 +49,8 @@
 
                 <x-menu-item title="Dashboard" icon="o-fire" link="/aswin/dashboard" />
                 <x-menu-item title="Tech Stack" icon="o-sparkles" link="/aswin/tech" />
-                <x-menu-item title="Project" icon="o-rocket-launch" link="/aswin/project" />
+                <x-menu-item title="Project" icon="o-puzzle-piece" link="/aswin/project" />
+                <x-menu-item title="App Shortcut" icon="o-rocket-launch" link="/aswin/shortcut" />
                 <x-menu-item title="Gallery" icon="o-photo" link="/aswin/gallery" />
                 <x-menu-item title="User" icon="o-users" link="/aswin/user" />
                 <x-menu-item title="Comment" icon="o-chat-bubble-bottom-center-text" link="/aswin/comment" />
