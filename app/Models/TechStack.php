@@ -10,6 +10,6 @@ class TechStack extends Model
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_tech_stacks');
+        return $this->belongsToMany(Project::class, 'project_id');
     }
 }

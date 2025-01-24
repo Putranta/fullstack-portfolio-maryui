@@ -30,6 +30,17 @@ new class extends Component {
 
     public function delete(Project $project): void
     {
+        $images = json_decode($project->library, true);
+        $path = array_column($images, 'path');
+
+        foreach ($path as $item) {
+            if (Storage::disk('public')->exists($item)) {
+                Storage::disk('public')->delete($item);
+            } else {
+                $this->warning('Image Not Found');
+            }
+        }
+
         $project->delete();
         $this->warning("Project deleted", position: 'toast-bottom');
     }
@@ -42,7 +53,7 @@ new class extends Component {
         </x-slot:actions>
     </x-header>
 
-    <x-table :headers="$headers" :rows="$projects" with-pagination link="{{ url('aswin/project/{id}/edit') }}">
+    <x-table :headers="$headers" :rows="$projects" with-pagination>
         @scope('cell_image', $project)
             @php
                 $image = json_decode($project->library, true)[0]
@@ -65,6 +76,8 @@ new class extends Component {
         @endscope
 
         @scope('cell_action', $project)
+            <x-button icon="o-pencil" link="{{ url('aswin/project/'.$project->id.'/edit') }}"
+                class="btn-ghost btn-sm text-black" />
             <x-button icon="o-trash" wire:click="delete({{ $project->id }})" wire:confirm="Are you sure?" spinner
                 class="btn-ghost btn-sm text-red-500" />
         @endscope

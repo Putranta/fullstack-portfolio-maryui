@@ -125,45 +125,48 @@ class extends Component {
           <div class="p-2 md:p-4 columns-2 md:columns-3 gap-4">
 
             @foreach ($galleries as $item)
-            <div class="break-inside-avoid mt-4 rounded-lg shadow-md hover:shadow-lg" wire:click="openModal({{ $item->id }})">
-                <div class="flex flex-col">
-                   <img class="w-full overflow-hidden rounded-lg" src="{{ $item->thumbnail }}">
-                   <div class="p-2 basis-14">
-                    <p class="text-xs md:text-sm font-bold leading-6 ">{{ $item->title }}</p>
+                <div class="break-inside-avoid mt-4 rounded-lg shadow-md hover:shadow-lg" wire:click="openModal({{ $item->id }})">
+                    <div class="relative flex flex-col">
+                        <!-- Container untuk gambar dan spinner -->
+                        <div class="relative">
+                            <img class="w-full overflow-hidden rounded-lg" src="{{ $item->thumbnail }}">
+                            <!-- Spinner Button -->
+                            <x-button
+                                class="h-full bg-transparent text-black absolute inset-0 m-auto flex items-center justify-center border-none hover:border-none hover:bg-transparent rounded-md"
+                                spinner="openModal({{ $item->id }})" />
+                        </div>
+                        <div class="p-2 basis-14">
+                            <p class="text-xs md:text-sm font-bold leading-6 ">{{ $item->title }}</p>
 
-                    <div class="flex justify-between">
-                        <x-button
-                        class="btn-ghost btn-sm text-black" spinner="openModal({{ $item->id }})" />
-                        <div class="flex justify-end gap-3 md:gap-4">
-                            <div class="flex items-center justify-between text-sm text-gray-500 space-x-1">
-                                <div class="flex gap-1 mt-1">
-                                  <span>{{ $item->download }}</span>
-                                  <x-icon name="o-arrow-down-tray" class="w-4 h-4 md:h-5 md:w-5" />
+                                <div class="flex justify-end gap-3 md:gap-4">
+                                    <div class="flex items-center justify-between text-sm text-gray-500 space-x-1">
+                                        <div class="flex gap-1 mt-1">
+                                            <span>{{ $item->download }}</span>
+                                            <x-icon name="o-arrow-down-tray" class="w-4 h-4 md:h-5 md:w-5" />
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm text-gray-500 space-x-1">
+                                        <div class="flex gap-1 mt-1">
+                                            <span>{{ $item->like }}</span>
+                                            @guest
+                                                <x-icon name="o-heart" class="w-4 h-4 md:h-5 md:w-5" />
+                                            @endguest
+                                            @auth
+                                                @if ($item->likes->contains('id', auth()->id()))
+                                                    <x-icon name="s-heart" class="text-red-500 w-4 h-4 md:h-5 md:w-5" />
+                                                @else
+                                                    <x-icon name="o-heart" class="w-4 h-4 md:h-5 md:w-5" />
+                                                @endif
+                                            @endauth
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                           <div class="flex items-center justify-between text-sm text-gray-500 space-x-1">
-                             <div class="flex gap-1 mt-1">
-                               <span>{{ $item->like }}</span>
-                               @guest
-                                    <x-icon name="o-heart" class="w-4 h-4 md:h-5 md:w-5" />
-                               @endguest
-                               @auth
-                                   @if ($item->likes->contains('id', auth()->id()))
-                                        <x-icon name="s-heart" class="text-red-500 w-4 h-4 md:h-5 md:w-5" />
-                                   @else
-                                        <x-icon name="o-heart" class="w-4 h-4 md:h-5 md:w-5" />
-                                   @endif
-                               @endauth
-                             </div>
-                           </div>
-                         </div>
+                        </div>
                     </div>
-
-                   </div>
-                 </div>
-               </div>
+                </div>
             @endforeach
+
 
         </div>
       </div>

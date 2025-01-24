@@ -17,4 +17,9 @@ class Project extends Model
     {
         return $this->belongsToMany(TechStack::class, 'project_tech_stacks');
     }
+
+    public function images()
+    {
+        return $this->belongsToMany(ProjectImg::class, 'project_id');
+    }
 }
