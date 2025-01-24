@@ -6,11 +6,14 @@ use App\Models\Gallery;
 use Illuminate\Support\Facades\Auth;
 use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Storage;
+use Livewire\WithPagination;
 
 new
 #[Layout('components.layouts.public')]
 class extends Component {
     use Toast;
+    use WithPagination;
+
     public bool $detailModal = false;
     public bool $authModal = false;
 
@@ -24,7 +27,7 @@ class extends Component {
     public function with(): array
     {
         return [
-            'galleries' => Gallery::latest()->get(),
+            'galleries' => Gallery::latest()->paginate(12),
         ];
     }
 
@@ -122,10 +125,16 @@ class extends Component {
                 </div>
             @endguest
 
-          <div class="p-2 md:p-4 columns-2 md:columns-3 gap-4">
-
+        <div class="p-2 md:p-4 columns-2 md:columns-3 gap-4">
             @foreach ($galleries as $item)
-                <div class="break-inside-avoid mt-4 rounded-lg shadow-md hover:shadow-lg" wire:click="openModal({{ $item->id }})">
+                <div class="break-inside-avoid mt-4 rounded-lg shadow-md hover:shadow-lg"
+                @auth
+                    wire:click="openModal({{ $item->id }})"
+                @endauth
+                @guest
+                    @click="$wire.authModal= true"
+                @endguest
+                >
                     <div class="relative flex flex-col">
                         <!-- Container untuk gambar dan spinner -->
                         <div class="relative">
@@ -166,8 +175,9 @@ class extends Component {
                     </div>
                 </div>
             @endforeach
-
-
+        </div>
+        <div class="mt-4 md:mt-6">
+            {{ $galleries->links() }}
         </div>
       </div>
 
@@ -178,20 +188,11 @@ class extends Component {
 
             <x-slot:actions>
                 <x-button label="Close"  @click="$wire.detailModal = false" class="btn-ghost mr-4" />
-                @guest
-                    <x-button class="btn-ghost"  @click="$wire.authModal= true">
-                        {{ $gallery->download }}
-                        <x-icon name="o-arrow-down-tray" />
-                    </x-button>
-                @endguest
-                @auth
                     <x-button class="btn-ghost" spinner="download({{ $gallery->id }})"  wire:click="download({{ $gallery->id }})">
                         {{ $gallery->download }}
                         <x-icon name="o-arrow-down-tray" />
                     </x-button>
-                @endauth
 
-                @auth
                     @if ($gallery->likes->contains('id', auth()->id()))
                         <x-button spinner="like({{$gallery->id}})" class="btn-ghost" wire:click="like({{$gallery->id}})">
                             {{ $gallery->like }}
@@ -203,13 +204,7 @@ class extends Component {
                             <x-icon name="o-heart" />
                         </x-button>
                     @endif
-                @endauth
-                @guest
-                    <x-button class="btn-ghost" @click="$wire.authModal= true">
-                        {{ $gallery->like }}
-                        <x-icon name="o-heart" />
-                    </x-button>
-                @endguest
+
             </x-slot:actions>
     </x-modal>
 

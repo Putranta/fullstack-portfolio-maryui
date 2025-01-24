@@ -94,7 +94,7 @@ class extends Component {
 
             @auth
                 <div class="mb-3">
-                    <span>Welcome, <span class="font-semibold">{{ Auth::user()->name }}</span>! What do you think about my project?</span>
+                    <span>Hii, <span class="font-semibold">{{ Auth::user()->name }}</span>! What do you think about my project?</span>
                 </div>
 
                 <x-form wire:submit="comment">
