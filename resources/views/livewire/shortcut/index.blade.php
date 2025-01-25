@@ -13,6 +13,8 @@ new class extends Component {
     public bool $createModal = false;
     public bool $editModal = false;
 
+    public $scId;
+
     public Shortcut $sc;
 
     #[Validate('required|max:20')]
@@ -27,13 +29,16 @@ new class extends Component {
     #[Validate('nullable|max:255')]
     public ?string $desc;
 
+    #[Validate('nullable|image|max:1024')]
+    public $newIcon;
+
     public function headers(): array
     {
         return [
             ['key' => 'icon', 'label' => 'Icon'],
             ['key' => 'name', 'label' => 'name'],
             ['key' => 'url', 'label' => 'Url', 'class' => 'hidden md:block'],
-            ['key' => 'action', 'label' => 'action'],
+            ['key' => 'action', 'label' => 'action', 'class' => 'text-center'],
         ];
     }
 
@@ -62,10 +67,50 @@ new class extends Component {
 
     public function edit(Shortcut $sc): void
     {
-        $this->fill($sc->toArray());
-        $this->icon = $sc->icon;
+        $this->fill($sc);
+        $this->scId = $sc->id;
 
         $this->editModal = true;
+    }
+
+    public function update()
+    {
+        $data = $this->validate([
+            'name' => 'required|string|max:255',
+            'newIcon' => 'nullable|image|max:1024',
+            'url' => 'required|url',
+            'desc' => 'nullable|string|max:200',
+        ]);
+
+        $sc = Shortcut::find($this->scId);
+
+        if ($this->newIcon && $this->newIcon != $sc->icon) {
+            $oldPath = str_replace('/storage', '', $sc->icon);
+            Storage::disk('public')->delete($oldPath);
+
+            $path = $this->newIcon->store('app_icon', 'public');
+            $data['icon'] = Storage::url($path);
+            $sc->update($data);
+        } else {
+            $data['icon'] = $sc->icon;
+            $sc->update($data);
+        }
+        $this->editModal = false;
+        $this->success('Shortcut Updated');
+        $this->reset();
+    }
+
+    public function delete(Shortcut $sc): void
+    {
+        $path = str_replace('/storage', '', $sc->icon);
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            $sc->delete();
+            $this->success('Shortcut Deleted');
+        } else {
+            $this->warning('Image Not Found');
+        }
     }
 }; ?>
 
@@ -83,9 +128,9 @@ new class extends Component {
 
         @scope('cell_action', $item)
             <x-button icon="o-pencil" wire:click="edit({{ $item->id }})"
-            class="btn-ghost btn-sm text-black" spinner="edit({{ $item['id'] }})" />
+            class="btn-ghost btn-sm text-black p-1" spinner="edit({{ $item->id }})" />
 
-            <x-button icon="o-trash" wire:click="delete({{ $item->id }})" wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500" />
+            <x-button icon="o-trash" wire:click="delete({{ $item->id }})" wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500 p-1" />
         @endscope
     </x-table>
 
@@ -114,15 +159,42 @@ new class extends Component {
                 <x-input label="Shortcut Name" wire:model="name" />
                 <x-input label="URL" wire:model="url" />
             </div>
-            <x-file wire:model="icon" label="Icon" accept="image/png, image/jpeg, image/jpg, image/ico, image/svg">
-                <img src="{{ $icon?? '/storage/app_icon/XtVlBtC8JamT3TzCWUlzHlIlhaTnq71BxOBjzLyr.png' }}" class="h-32 md:h-40 rounded-lg">
-            </x-file>
+
+            <!-- Input file yang tersembunyi -->
+            <input type="file" id="fileInput" wire:model="newIcon" class="hidden" accept=".png, .jpg, .jpeg, .ico, .svg">
+
+              <!-- Wrapper untuk pratinjau gambar dan spinner -->
+            <div class="relative w-fit">
+                <!-- Spinner -->
+                <div
+                    wire:loading
+                    wire:target="newIcon"
+                    class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-lg z-10 p-x pt-6"
+                >
+                    <svg class="w-8 h-8 animate-spin text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 000 8v4a8 8 0 01-8-8z"></path>
+                    </svg>
+                </div>
+
+                <label for="fileInput">Icon</label>
+
+                <!-- Pratinjau gambar -->
+                <img
+                    src="{{ $newIcon ? $newIcon->temporaryUrl() : $icon }}"
+                    class="h-32 md:h-40 rounded-lg cursor-pointer"
+                    alt="Shortcut Icon"
+                    @click="document.getElementById('fileInput').click()"
+                />
+            </div>
+
             <x-textarea wire:model="desc" label="Description" rows="2" />
 
-            <x-slot:actions>
+            <x-slot:actions class="mt-2">
                 <x-button label="Cancel" @click="$wire.editModal = false" />
                 <x-button label="Submit" icon="o-paper-airplane" spinner="update" type="submit" class="btn-primary" />
             </x-slot:actions>
         </x-form>
     </x-modal>
+
 </div>

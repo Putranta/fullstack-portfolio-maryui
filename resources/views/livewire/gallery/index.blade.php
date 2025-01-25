@@ -30,21 +30,15 @@ new class extends Component {
         $data['slug'] = Str::slug($data['title']);
 
         if ($this->img) {
-            // Simpan gambar asli
             $originalPath = $this->img->store('gallery/original', 'public');
 
             $manager = new ImageManager(new Driver());
-
-            // create new image instance with 800 x 600 (4:3)
             $image = $manager->read(Storage::disk('public')->path($originalPath));
-
-            // scale to fixed height
             $image->scale(height: 200);
 
             $thumbnailPath = 'gallery/thumbnails/' . $this->img->hashName();
             $image->save(Storage::disk('public')->path($thumbnailPath));
 
-            // Simpan path ke database
             $data['img'] = Storage::url($originalPath);
             $data['thumbnail'] = Storage::url($thumbnailPath);
         }
