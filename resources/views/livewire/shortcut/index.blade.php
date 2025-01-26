@@ -17,7 +17,7 @@ new class extends Component {
 
     public Shortcut $sc;
 
-    #[Validate('required|max:20')]
+    #[Validate('required|max:50')]
     public string $name = '';
 
     #[Validate('required|image|max:1024')]
