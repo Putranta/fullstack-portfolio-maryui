@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use App\Models\TechStack;
 use App\Models\Project;
 use App\Models\Profile;
+use App\Models\Shortcut;
 
 new
 #[Layout('components.layouts.public')]
@@ -16,6 +17,7 @@ class extends Component {
             'techs' => TechStack::all(),
             'projects' => Project::where('is_featured', true)->get(),
             'profile' => Profile::first(),
+            'shortcut' => Shortcut::latest()->get(),
         ];
     }
 }; ?>
@@ -112,21 +114,23 @@ class extends Component {
         </div>
     </section>
 
-    {{-- <section id="app" class="grid grid-cols-1 justify-center justify-items-center mt-14 ">
+    <section id="app" class="grid grid-cols-1 justify-center justify-items-center mt-14 ">
         <div class="max-w-[42rem] w-full card-container">
             <x-header title="🚀 App Shortcut" separator class="mb-4" size="text-2xl md:text-4xl" />
 
             <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 ">
-                <a href="https://cybersense.putrantaswin.my.id/" target="_blank">
-                    <div
-                        class="app p-3 rounded-lg shadow-md flex flex-col items-center justify-items-center justify-center transition-all duration-500 hover:scale-110 dark:hover:bg-white/10 hover:bg-gray-200">
-                        <img src="{{ asset('storage/app-icon/app1.png') }}" alt="">
-                        <span class="text-center text-sm">CyberSense UMKM</span>
-                    </div>
-                </a>
+                @foreach ($shortcut as $sc)
+                    <a href="{{ $sc->url }}" target="_blank">
+                        <div
+                            class="app p-0 md:p-3 rounded-lg flex flex-col items-center justify-items-center justify-center transition-all duration-500 hover:scale-110 dark:hover:bg-white/10 hover:bg-gray-200">
+                            <img src="{{ $sc->icon}}" alt="">
+                            <span class="text-center text-sm">{{ $sc->name }}</span>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
-    </section> --}}
+    </section>
 
 
     <section class="scroll-mt-28 mb-28 card-container grid grid-cols-1 justify-center justify-items-center mt-20">
