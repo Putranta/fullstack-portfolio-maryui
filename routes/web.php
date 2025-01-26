@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Admin;
 use Livewire\Volt\Volt;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -28,16 +29,16 @@ Route::get('/logout', function () {
 
 // Protected routes here
 Route::middleware('auth')->group(function () {
-    Volt::route('/aswin/dashboard', 'dashboard.index')->middleware('Admin:Aswinthedev');
-    Volt::route('/aswin/user', 'users.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/tech', 'techstack.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/project', 'project.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/project/create', 'project.create')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/project/{id}/edit', 'project.edit')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/comment', 'comment.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/gallery', 'gallery.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/profile', 'profile.index')->middleware('Admin:Aswinthedev');;
-    Volt::route('/aswin/shortcut', 'shortcut.index')->middleware('Admin:Aswinthedev');;
+    Volt::route('/aswin/dashboard', 'dashboard.index')->middleware(Admin::class);
+    Volt::route('/aswin/user', 'users.index')->middleware(Admin::class);
+    Volt::route('/aswin/tech', 'techstack.index')->middleware(Admin::class);
+    Volt::route('/aswin/project', 'project.index')->middleware(Admin::class);
+    Volt::route('/aswin/project/create', 'project.create')->middleware(Admin::class);
+    Volt::route('/aswin/project/{id}/edit', 'project.edit')->middleware(Admin::class);
+    Volt::route('/aswin/comment', 'comment.index')->middleware(Admin::class);
+    Volt::route('/aswin/gallery', 'gallery.index')->middleware(Admin::class);
+    Volt::route('/aswin/profile', 'profile.index')->middleware(Admin::class);
+    Volt::route('/aswin/shortcut', 'shortcut.index')->middleware(Admin::class);
 });
 
 

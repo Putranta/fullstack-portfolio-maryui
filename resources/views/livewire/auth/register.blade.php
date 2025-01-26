@@ -39,7 +39,7 @@ class extends Component {
 
         $data['avatar'] = '/storage/user.png';
         $data['password'] = bcrypt($data['password']);
-        $data['role'] = 'Aswinthedev';
+        $data['role'] = 'guest';
 
         $user = User::create($data);
 
