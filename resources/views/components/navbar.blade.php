@@ -40,3 +40,40 @@
 
     </nav>
 </div>
+
+<script>
+    function initScrollNavbar() {
+        let lastScrollY = window.scrollY;
+        const threshold = 70; // Jarak scroll tertentu sebelum navbar hilang
+
+        window.addEventListener("scroll", () => {
+            const navbar = document.getElementById("navbar");
+            const navbarMobile = document.getElementById("navbar-mobile");
+
+            if (!navbar || !navbarMobile) return;
+
+            if (window.scrollY > threshold && window.scrollY > lastScrollY) {
+                // Jika scroll lebih dari threshold dan scroll ke bawah
+                navbar.style.opacity = "0";
+                navbarMobile.style.opacity = "0";
+            } else if (window.scrollY < lastScrollY) {
+                // Jika scroll ke atas
+                navbar.style.opacity = "1";
+                navbarMobile.style.opacity = "1";
+            }
+
+            lastScrollY = window.scrollY;
+        });
+    }
+
+    // Inisialisasi script saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", () => {
+        initScrollNavbar();
+    });
+
+    // Re-inisialisasi script saat navigasi Livewire
+    window.addEventListener("livewire:navigate", () => {
+        initScrollNavbar();
+    });
+</script>
+

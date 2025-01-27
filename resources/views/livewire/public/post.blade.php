@@ -22,7 +22,7 @@ class extends Component {
             <hr>
         </div>
 
-        <livewire:components.postPage lazy />
+        <livewire:components.postPage lazy="on-load" />
 
     </section>
 </div>

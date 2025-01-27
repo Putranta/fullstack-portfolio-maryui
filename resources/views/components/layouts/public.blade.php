@@ -29,28 +29,6 @@
     {{--  TOAST area --}}
     <x-toast />
 
-    <script>
-        let lastScrollY = window.scrollY;
-        const threshold = 70; // Jarak scroll tertentu sebelum navbar hilang
-
-        window.addEventListener("scroll", () => {
-            const navbar = document.getElementById("navbar");
-            const navbarMobile = document.getElementById("navbar-mobile");
-
-            if (window.scrollY > threshold && window.scrollY > lastScrollY) {
-            // Jika scroll lebih dari threshold dan scroll ke bawah
-            navbar.style.opacity = "0";
-            navbarMobile.style.opacity = "0";
-            } else if (window.scrollY < lastScrollY) {
-            // Jika scroll ke atas
-            navbar.style.opacity = "1";
-            navbarMobile.style.opacity = "1";
-            }
-
-            lastScrollY = window.scrollY;
-        });
-    </script>
-
     {{--  TOAST area --}}
     <x-toast />
 

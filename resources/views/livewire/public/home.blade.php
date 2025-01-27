@@ -92,7 +92,8 @@ class extends Component {
         @endif
         <div class="my-3 pb-6 rounded-lg shadow-md motion-preset-blur-right  motion-duration-1000">
             <picture id="theme-picture">
-                <img alt="github-snake"
+                <img src="https://raw.githubusercontent.com/Putranta/Putranta/output/github-snake-dark.svg" alt="github-snake" class="hidden dark:block">
+                <img alt="github-snake" class="dark:hidden"
                     src="https://raw.githubusercontent.com/Putranta/Putranta/output/github-snake.svg" />
             </picture>
         </div>
@@ -189,56 +190,41 @@ class extends Component {
             <x-header title="📖 Posts" separator class="mb-4" size="text-2xl md:text-4xl" />
         </div>
 
-        <livewire:components.posts lazy />
+        <livewire:components.posts lazy="on-load" />
 
     </section>
 </div>
 
-@push('b-script')
-{{-- <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
 <script>
-    const {
-        animate,
-        scroll
-    } = Motion
-    document.querySelectorAll(".card-container > div").forEach((item) => {
-        scroll(
-            animate(item, {
-                scale: [0.7, 1, 1, 1],
-                duration: 1.5, // Tambahkan durasi animasi (dalam detik)
-                easing: "ease-in-out",
-            }), {
-                target: item,
-                offset: ["start end", "end end", "start start", "end start"],
-            }
-        );
-    });
+    function initMotionScroll() {
+        const { animate, scroll } = Motion;
 
-    function updatePictureTheme() {
-        const theme = document.documentElement.getAttribute("data-theme"); // Ambil tema saat ini
-        const imgElement = document.querySelector("#theme-picture img");
-
-        if (theme === "dark") {
-            imgElement.src = "https://raw.githubusercontent.com/Putranta/Putranta/output/github-snake-dark.svg";
-        } else {
-            imgElement.src = "https://raw.githubusercontent.com/Putranta/Putranta/output/github-snake.svg";
-        }
+        // Seleksi elemen dengan class card-container > div
+        document.querySelectorAll(".card-container > div").forEach((item) => {
+            scroll(
+                animate(item, {
+                    scale: [0.7, 1, 1, 1],
+                    duration: 1.5, // Durasi animasi dalam detik
+                    easing: "ease-in-out",
+                }), {
+                    target: item,
+                    offset: ["start end", "end end", "start start", "end start"],
+                }
+            );
+        });
     }
 
-    // Panggil fungsi pertama kali untuk inisialisasi
-    updatePictureTheme();
-
-    // Pantau perubahan tema
-    const observer = new MutationObserver(() => {
-        updatePictureTheme();
+    // Inisialisasi saat halaman selesai dimuat
+    document.addEventListener("DOMContentLoaded", () => {
+        initMotionScroll();
     });
 
-    // Perhatikan perubahan atribut `data-theme` pada elemen <html>
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["data-theme"],
+    // Re-inisialisasi setiap navigasi Livewire
+    window.addEventListener("livewire:navigate", () => {
+        initMotionScroll();
     });
-</script> --}}
-@endpush
+</script>
+
 
 
