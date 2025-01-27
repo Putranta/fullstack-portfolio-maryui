@@ -62,8 +62,10 @@ new class extends Component {
 
     <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy">
         @scope('cell_action', $user)
-            <x-button icon="o-trash" wire:click="delete({{ $user->id }})" wire:confirm="Are you sure?" spinner
-                class="btn-ghost btn-sm text-red-500" />
+           @if ($user->role == 'guest')
+           <x-button icon="o-trash" wire:click="delete({{ $user->id }})" wire:confirm="Are you sure?" spinner
+            class="btn-ghost btn-sm text-red-500" />
+           @endif
         @endscope
     </x-table>
 </div>

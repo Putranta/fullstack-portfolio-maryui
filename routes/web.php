@@ -42,110 +42,27 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['web'])->group(function () {
-    Route::get('/auth/{provider}/redirect', function ($provider) {
-        // Validasi nama provider
-        if (!in_array($provider, ['google', 'github'])) {
-            abort(404, 'Provider tidak valid.');
-        }
-
-        // Simpan URL halaman sebelumnya ke session
-        session(['redirect_url' => url()->previous()]);
-        return Socialite::driver($provider)->redirect();
-    })->name('oauth.redirect');
-
-    Route::get('/auth/{provider}/callback', function ($provider) {
-        if (!in_array($provider, ['google', 'github'])) {
-            abort(404, 'Provider tidak valid.');
-        }
-
-        try {
-            $socialUser = Socialite::driver($provider)->stateless()->user();
-        } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Gagal login menggunakan ' . ucfirst($provider) . '.');
-        }
-
-        // Cek apakah pengguna sudah terdaftar
-        $user = User::where('email', $socialUser->getEmail())->first();
-
-        if (!$user) {
-            if (!$socialUser->getEmail()) {
-                return redirect()->route('login')->with('error', 'Email tidak tersedia dari penyedia OAuth.');
-            }
-
-            // Buat pengguna baru
-            $user = User::create([
-                'name' => $socialUser->getName(),
-                'email' => $socialUser->getEmail(),
-                'password' => bcrypt(uniqid()), // Set password acak
-                'oauth_provider' => $provider,
-                'oauth_id' => $socialUser->getId(),
-            ]);
-        }
-
-        // Login pengguna
-        Auth::login($user);
-
-        $redirectUrl = session('redirect_url', '/');
-        if (!str_starts_with($redirectUrl, config('app.url'))) {
-            $redirectUrl = '/';
-        }
-
-        return redirect($redirectUrl);
-    })->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])
-        ->name('oauth.callback');
-});
-
-
-
 Route::get('/auth/{provider}/redirect', function ($provider) {
-    // Validasi nama provider
-    if (!in_array($provider, ['google', 'github'])) {
-        abort(404, 'Provider tidak valid.');
-    }
-
-    // Simpan URL halaman sebelumnya ke session
-    session(['redirect_url' => url()->previous()]);
+    // Redirect ke provider OAuth
     return Socialite::driver($provider)->redirect();
 })->name('oauth.redirect');
 
 Route::get('/auth/{provider}/callback', function ($provider) {
-    if (!in_array($provider, ['google', 'github'])) {
-        abort(404, 'Provider tidak valid.');
-    }
+    $socialUser = Socialite::driver($provider)->stateless()->user();
 
-    try {
-        $socialUser = Socialite::driver($provider)->stateless()->user();
-    } catch (\Exception $e) {
-        return redirect()->route('login')->with('error', 'Gagal login menggunakan ' . ucfirst($provider) . '.');
-    }
-
-    // Cek apakah pengguna sudah terdaftar
-    $user = User::where('email', $socialUser->getEmail())->first();
-
-    if (!$user) {
-        if (!$socialUser->getEmail()) {
-            return redirect()->route('login')->with('error', 'Email tidak tersedia dari penyedia OAuth.');
-        }
-
-        // Buat pengguna baru
-        $user = User::create([
+    $user = User::firstOrCreate(
+        ['email' => $socialUser->getEmail()],
+        [
             'name' => $socialUser->getName(),
             'email' => $socialUser->getEmail(),
             'password' => bcrypt(uniqid()), // Set password acak
             'oauth_provider' => $provider,
-            'oauth_id' => $socialUser->getId(),
-        ]);
-    }
+            'role' => 'guest'
+        ]
+    );
 
-    // Login pengguna
     Auth::login($user);
 
-    $redirectUrl = session('redirect_url', '/');
-    if (!str_starts_with($redirectUrl, config('app.url'))) {
-        $redirectUrl = '/';
-    }
 
-    return redirect($redirectUrl);
-})->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])
-    ->name('oauth.callback');
+    return redirect('/');
+});
